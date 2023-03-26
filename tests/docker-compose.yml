@@ -1,0 +1,8 @@
+services:
+  firebase:
+    build: ..
+    tty: true
+    ports:
+      - 4000:4000 # UI
+      - 4500:4500 # Logging via websocket
+      - 8080:8080 # Firestore

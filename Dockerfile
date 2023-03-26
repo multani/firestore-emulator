@@ -1,4 +1,4 @@
-FROM node:19-alpine
+FROM node:lts-alpine
 
 RUN apk add openjdk17-jre-headless
 
