@@ -35,7 +35,10 @@ do
     fi
   fi
 
-  echo "Container is running"
+  echo "Container is running with version:"
+  echo "==============="
+  docker compose exec firebase firebase --version
+  echo "==============="
 
   echo "Trying to poll the Firestore endpoint"
 
