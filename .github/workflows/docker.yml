@@ -3,13 +3,19 @@ name: Docker
 on:
   push:
     tags:
-      - '*'
+      - "**"
 
     branches:
       - main
 
 jobs:
+  test:
+    uses: ./.github/workflows/template-test.yml
+
   docker:
+    name: Docker build
+    needs:
+      - test
     runs-on: ubuntu-latest
     permissions:
       contents: write
@@ -41,7 +47,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v4
         with:
-          push: ${{ startsWith(github.ref, 'refs/tags/') || github.ref == 'refs/heads/main' }}
+          push: true
           tags: ${{ steps.docker-meta.outputs.tags }}
           labels: ${{ steps.docker-meta.outputs.labels }}
 
@@ -56,6 +62,6 @@ jobs:
             Get the Docker image at [https://github.com/multani/firestore-emulator/pkgs/container/firestore-emulator/](ghcr.io/multani/firestore-emulator:${{ github.ref_name }})
 
             ```
-            $ docker pull ghcr.io/multani/firestore-emulator:v1.22.0
+            $ docker pull ghcr.io/multani/firestore-emulator:${{ github.ref_name }}
             ```
             ---
