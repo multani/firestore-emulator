@@ -81,3 +81,6 @@ do
   echo "Firestore endpoint seemed to have returned an error, trying again in $sleep_time seconds..."
   sleep $sleep_time
 done
+
+echo "Didn't work successfully after $max_tries, considering it fails."
+exit 255
