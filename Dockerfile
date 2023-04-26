@@ -1,4 +1,6 @@
-FROM node:lts-alpine
+# The UI is not compatible with node >= 18.16
+# See: https://github.com/firebase/firebase-tools-ui/issues/933
+FROM node:18.15-alpine
 
 RUN apk add openjdk17-jre-headless
 

@@ -27,28 +27,38 @@ do
     if [ -z "$pid" ]
     then
       echo "Container was running, but not anymore, maybe it crashed?"
-      echo "Logs:"
-      echo "==============="
+      echo "== Logs: ========="
       docker compose logs
-      echo "==============="
+      echo "=================="
+
+      echo "Retrieving internal log files..."
+      docker compose cp firebase:/app/ui-debug.log ui-debug.log
+      docker compose cp firebase:/app/firestore-debug.log firestore-debug.log
+
+      echo "== UI debug log: ========="
+      cat ui-debug.log
+      echo "=========================="
+
+      echo "== Firestore debug log: ========="
+      cat firestore-debug.log
+      echo "================================="
+
       exit 255
     fi
   fi
 
-  echo "Container is running with version:"
-  echo "==============="
+  echo "== Container is running with version: ========="
   docker compose exec firebase firebase --version
-  echo "==============="
+  echo "==============================================="
 
   echo "Trying to poll the Firestore endpoint"
 
   output="$(curl --silent --fail --location --include $firestore_url)"
   return_code=$?
 
-  echo "Firestore endpoint at $firestore_url returned (code=$return_code):"
-  echo "==============="
+  echo "== Firestore endpoint at $firestore_url returned (code=$return_code): ========="
   echo "$output"
-  echo "==============="
+  echo "==============================================================================="
 
   if [ $return_code == 0 ]
   then
