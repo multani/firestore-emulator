@@ -10,7 +10,16 @@
   "lockFileMaintenance": {
     "enabled": true,
     "schedule": [
-      "before 8am on saturday"
-    ]
+      "before 8am on saturday",
+    ],
   },
+
+  "packageRules": [
+    {
+      // https://github.com/firebase/firebase-tools-ui/issues/933
+      "matchDatasources": ["docker"],
+      "matchPackageNames": ["node"],
+      "allowedVersions": "< 18.16",
+    },
+  ],
 }
