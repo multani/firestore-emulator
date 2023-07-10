@@ -5,4 +5,7 @@ services:
     ports:
       - 4000:4000 # UI
       - 4500:4500 # Logging via websocket
+      - 5001:5001 # Cloud Functions
       - 8080:8080 # Firestore
+      - 8085:8085 # Pub/Sub (eg if pub/sub functions)
+      - 9299:9299 # Eventarc
