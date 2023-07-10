@@ -1,18 +1,28 @@
 # The UI is not compatible with node >= 18.16
 # See: https://github.com/firebase/firebase-tools-ui/issues/933
-FROM node:18.15-alpine
+FROM nikolaik/python-nodejs:python3.11-nodejs18-alpine
 
 RUN apk add openjdk17-jre-headless
 
-WORKDIR /app
-ADD package.json package-lock.json /app/
+# workaround java sigsev
+RUN apk --no-cache add gcompat
+ENV LD_PRELOAD=/lib/libgcompat.so.0
+
+# 
+WORKDIR /build
+ADD package.json package-lock.json /build/
 RUN npm install
-ENV PATH=/app/node_modules/.bin:$PATH
+ENV PATH=/build/node_modules/.bin:$PATH
 RUN firebase --debug setup:emulators:firestore
 RUN firebase --debug setup:emulators:ui
+RUN firebase --debug setup:emulators:pubsub
 
-EXPOSE 4000 4500 8080
+EXPOSE 4000 440 4500 5001 8080 9299
 
-ADD firebase.json /app/
-CMD ["/app/start.sh"]
-ADD start.sh /app/
+# start your container with your custom firebase.json, workspace, command
+
+WORKDIR /demo
+
+ADD firebase.json /demo/
+ADD start.sh /demo/
+CMD ["/demo/start.sh"]
