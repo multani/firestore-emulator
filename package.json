@@ -12,6 +12,6 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "firebase-tools": "~13.2.0"
+    "firebase-tools": "~13.3.0"
   }
 }
