@@ -1,16 +1,14 @@
 {
-  "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": [
-    "config:recommended"
+  $schema: 'https://docs.renovatebot.com/renovate-schema.json',
+  extends: [
+    'config:recommended',
   ],
-
-  "automerge": true,
-  "schedule": "every monday",
-
-  "lockFileMaintenance": {
-    "enabled": true,
-    "schedule": [
-      "before 8am on saturday",
+  automerge: true,
+  schedule: 'on monday',
+  lockFileMaintenance: {
+    enabled: true,
+    schedule: [
+      'before 8am on saturday',
     ],
   },
 }
