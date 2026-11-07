@@ -26,8 +26,11 @@ Additionally, you can configure the following environment variables:
   still run correctly, but you won't be able to see the content of the database
   in the UI.
 
-  Default value: `google-cloud-firestore-emulator` (same value as in the client SDK)
+  Default value: `demo-google-cloud-firestore-emulator`
 
+* `EMULATOR_SERVICES`: the emulator services to start, comma separated.
+
+  Default value: `firestore,pubsub`
 
 ### Starting the emulator
 
@@ -35,11 +38,12 @@ Start a container from this image exposing the following ports:
 
 * TCP/4000: the Firebase UI
 * TCP/8080: the Firestore database
+* TCP/8085: the PubSub emulator
 
 You can use:
 
 ```sh
-docker run --rm -ti -p 4000:4000 -p 8080:8080 ghcr.io/multani/firestore-emulator:latest
+docker run --rm -ti -p 4000:4000 -p 8080:8080 -p 8085:8085 ghcr.io/multani/firestore-emulator:latest
 ```
 
 Or via Docker Compose:
@@ -52,6 +56,7 @@ services:
     ports:
       - 4000:4000 # UI
       - 8080:8080 # Firestore
+      - 8085:8085 # PubSub
 ```
 
 You can open the UI via http://127.0.0.1:4000
