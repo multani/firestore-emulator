@@ -2,14 +2,12 @@
 # See: https://github.com/firebase/firebase-tools-ui/issues/933
 FROM node:26-alpine
 
-
-RUN apk add openjdk17-jre-headless
+RUN apk add openjdk25-jre-headless
 
 # workaround java sigsev
 RUN apk --no-cache add gcompat
 ENV LD_PRELOAD=/lib/libgcompat.so.0
 
-# 
 WORKDIR /build
 ADD package.json package-lock.json /build/
 RUN FORCE_COLOR=1 npm install
